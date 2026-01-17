@@ -1,6 +1,6 @@
 streamlit
 openai-whisper
-moviepy
+moviepy==1.0.3
 deep-translator
 numpy
 ffmpeg-python
