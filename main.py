@@ -122,8 +122,8 @@ def process_video_ffmpeg(video_input, srt_input, audio_input, video_output, mode
     elif mode == "Dublado":
         cmd.extend([
             "-c:v", "copy",
-            "-map", "0:v:0", # Pega vídeo do arquivo 0
-            "-map", "1:a:0", # Pega áudio do arquivo 1 (Dublagem)
+            "-map", "0:v:0",
+            "-map", "1:a:0",
             "-c:a", "aac"
         ])
     elif mode == "Legenda + Dublagem":
@@ -143,10 +143,9 @@ def process_video_ffmpeg(video_input, srt_input, audio_input, video_output, mode
     
     return video_output
 
-# --- Interface do Streamlit ---
 
 uploaded_file = st.file_uploader("Escolha um arquivo de vídeo", type=["mp4", "mov", "avi"])
-process_mode = st.radio("Selecione o que deseja gerar:", ["Apenas Legenda", "Dublado", "Legenda + Dublagem"])
+process_mode = st.radio("Selecione o que deseja gerar:", ["Apenas Legenda", "Dublado(Demo)", "Legenda + Dublagem"])
 
 if uploaded_file is not None:
     # Salvar vídeo original
