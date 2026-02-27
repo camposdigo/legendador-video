@@ -1,6 +1,5 @@
 streamlit
 openai-whisper
 deep-translator
-gTTS
 pydub
-setuptools<70
+edge-tts
