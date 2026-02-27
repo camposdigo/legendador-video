@@ -139,7 +139,7 @@ def process_video_ffmpeg(video_input, srt_input, audio_input, video_output, mode
 
 
 uploaded_file = st.file_uploader("Escolha um vídeo", type=["mp4", "mov", "avi"])
-process_mode = st.radio("Selecione o modo:", ["Apenas Legenda", "Dublado", "Legenda + Dublagem"])
+process_mode = st.radio("Selecione o modo:", ["Apenas Legenda", "Dublado(Demo)", "Legenda + Dublagem"])
 
 if uploaded_file is not None:
     tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
