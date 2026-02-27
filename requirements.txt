@@ -3,4 +3,3 @@ openai-whisper
 deep-translator
 gTTS
 pydub
-pyaudioop
