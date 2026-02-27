@@ -1,5 +1,6 @@
 streamlit
 openai-whisper
 deep-translator
-pydub
 edge-tts
+pydub
+ffmpeg-python
