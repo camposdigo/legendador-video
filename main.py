@@ -16,7 +16,7 @@ st.markdown("Faça upload de um vídeo em **Inglês**, traduza e escolha gerar l
 
 @st.cache_resource
 def load_whisper_model():
-    return whisper.load_model("base")
+    return whisper.load_model("tiny")
 
 def format_timestamp(seconds):
     td = timedelta(seconds=seconds)
