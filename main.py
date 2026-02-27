@@ -25,7 +25,7 @@ def format_timestamp(seconds):
     hours = total_seconds // 3600
     minutes = (total_seconds % 3600) // 60
     secs = total_seconds % 60
-    millis = int(td.microseconds / 1000)
+    millis = int((seconds - int(seconds)) * 1000)
     return f"{hours:02}:{minutes:02}:{secs:02},{millis:03}"
 
 def translate_segments(transcription_segments):
@@ -88,7 +88,11 @@ def generate_dubbed_audio(translated_segments, video_path):
                 # Alterna voz masculina/feminina
                 voice = "pt-BR-AntonioNeural" if i % 2 == 0 else "pt-BR-FranciscaNeural"
 
-                asyncio.run(generate_tts(text, temp_tts_path, voice))
+                # LOOP SEGURO PARA STREAMLIT CLOUD
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(generate_tts(text, temp_tts_path, voice))
+                loop.close()
 
                 fala = AudioSegment.from_file(temp_tts_path)
                 final_audio = final_audio.overlay(fala, position=start_ms)
@@ -114,12 +118,12 @@ def process_video_ffmpeg(video_input, srt_input, audio_input, video_output, mode
     srt_input_escaped = srt_input.replace("\\", "/")
     cmd = [ffmpeg_path, "-i", video_input]
 
-    if audio_input and mode in ["Dublado", "Legenda + Dublagem"]:
+    if audio_input and mode in ["Dublado(Demo)", "Legenda + Dublagem"]:
         cmd.extend(["-i", audio_input])
 
     if mode == "Apenas Legenda":
         cmd.extend(["-vf", f"subtitles='{srt_input_escaped}'", "-c:a", "copy"])
-    elif mode == "Dublado":
+    elif mode == "Dublado(Demo)":
         cmd.extend(["-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac"])
     elif mode == "Legenda + Dublagem":
         cmd.extend([
@@ -139,7 +143,11 @@ def process_video_ffmpeg(video_input, srt_input, audio_input, video_output, mode
 
 
 uploaded_file = st.file_uploader("Escolha um vídeo", type=["mp4", "mov", "avi"])
-process_mode = st.radio("Selecione o modo:", ["Apenas Legenda", "Dublado(Demo)", "Legenda + Dublagem"])
+
+process_mode = st.radio(
+    "Selecione o modo:",
+    ["Apenas Legenda", "Dublado(Demo)", "Legenda + Dublagem"]
+)
 
 if uploaded_file is not None:
     tfile = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
@@ -167,7 +175,7 @@ if uploaded_file is not None:
             srt_temp.close()
 
             audio_path = None
-            if process_mode in ["Dublado", "Legenda + Dublagem"]:
+            if process_mode in ["Dublado(Demo)", "Legenda + Dublagem"]:
                 status.info("Gerando dublagem neural...")
                 audio_path = generate_dubbed_audio(translated_data, video_path)
 
