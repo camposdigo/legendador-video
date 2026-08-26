@@ -19,9 +19,7 @@ Transcrição segmentada
       ↓
 Tradução EN → PT-BR
       ↓
-┌──────────────┬──────────────┐
-│ Legenda SRT  │ Dublagem TTS │
-└──────────────┴──────────────┘
+Legenda SRT + Dublagem TTS
       ↓
 FFmpeg
       ↓
@@ -44,15 +42,12 @@ Vídeo final
 ## Modos disponíveis
 
 ### Apenas Legenda
-
 Transcreve, traduz e incorpora legendas em português ao vídeo.
 
 ### Dublado (Demo)
-
 Gera uma faixa de áudio em português e substitui o áudio do vídeo.
 
 ### Legenda + Dublagem
-
 Combina os dois fluxos e entrega um vídeo traduzido com legenda e áudio em português.
 
 ## Tecnologias
@@ -79,16 +74,9 @@ A arquitetura pode ser adaptada para:
 
 ## Instalação
 
-Clone o projeto:
-
 ```bash
-git clone https://github.com/camposdigo/legendador-video.git
-cd legendador-video
-```
-
-Instale as dependências:
-
-```bash
+git clone https://github.com/camposdigo/autosubtitle-ai.git
+cd autosubtitle-ai
 python -m pip install -r requirements.txt
 ```
 
@@ -106,8 +94,6 @@ sudo apt install ffmpeg
 streamlit run main.py
 ```
 
-Depois, abra o endereço informado pelo Streamlit no navegador.
-
 ## Fluxo de utilização
 
 1. Faça upload de um vídeo em inglês.
@@ -119,7 +105,7 @@ Depois, abra o endereço informado pelo Streamlit no navegador.
 ## Estrutura
 
 ```text
-legendador-video/
+autosubtitle-ai/
 ├── main.py
 ├── requirements.txt
 ├── packages.txt
